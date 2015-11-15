@@ -1,7 +1,6 @@
 package com.example.tyvanderley.jsouptester;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +29,6 @@ public class MainActivity extends Activity {
 
     private class Animal extends AsyncTask<Void, Void, Void> {
         String[] animalArray;
-        String title;
 
         @Override
         protected void onPreExecute() {
@@ -45,15 +43,22 @@ public class MainActivity extends Activity {
         @Override
         protected Void doInBackground(Void... params) {
             try {
+                // Connect to the Humane Society website
                 Document document = Jsoup.connect(mURLAddress).get();
-                Elements classSelector = document.select("animal-listing_title");
+
+                // Create an ArrayList of Strings
                 List<String> animals = new ArrayList<>();
+
+                // Get the animal names through selecting the class and then it's children a elements
+                Elements classSelector = document.select(".animal-listing__title > a");
                 for (Element element:classSelector) {
-                    String animalName = element.ownText();
+                    String animalName = element.text();
                     animals.add(animalName);
                 }
 
+                // size the String[] animalArray to the size of our ArrayList
                 animalArray = new String[animals.size()];
+                // Parse the data from the ArrayList into animalArray
                 animals.toArray(animalArray);
 
             } catch (IOException e) {
@@ -64,10 +69,12 @@ public class MainActivity extends Activity {
 
         @Override
         protected void onPostExecute(Void result) {
+            String animalNames = "";
             TextView txtAnimal = (TextView) findViewById(R.id.animalList);
-            for (int i = 0; i < animalArray.length; i++) {
-                txtAnimal.setText(animalArray[i]);
+            for (String name : animalArray) {
+                animalNames += name + ", ";
             }
+            txtAnimal.setText(animalNames);
             mProgressDialog.dismiss();
         }
     }
