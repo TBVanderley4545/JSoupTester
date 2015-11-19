@@ -10,6 +10,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         new PullNameActivity(this, this).execute();
+        new PullPictureActivity(this,this).execute();
     }
 
 }
