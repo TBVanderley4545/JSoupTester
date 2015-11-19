@@ -78,9 +78,9 @@ public class PullPictureActivity extends AsyncTask<Void, Void, Void> {
 
         for (Bitmap img : animalPicsArray) {
             ImageView imageView = new ImageView(mActivity);
-            imageView.setLayoutParams(new android.view.ViewGroup.LayoutParams(80,60));
-            imageView.setMaxHeight(20);
-            imageView.setMaxWidth(20);
+            imageView.setLayoutParams(new android.view.ViewGroup.LayoutParams(300,300));
+            imageView.setMaxHeight(400);
+            imageView.setMaxWidth(400);
             imageView.setImageBitmap(img);
             layout.addView(imageView);
         }
